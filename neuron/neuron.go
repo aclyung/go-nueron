@@ -1,11 +1,9 @@
 package neuron
 
 import (
-	"math"
-
 	"almeng.com/neuron/layer"
+	_ "almeng.com/neuron/matrix"
 )
-
 
 type neuron struct {
 	layers []layer.Layer
@@ -22,12 +20,8 @@ func (n *neuron) Add(outunit int) {
 	n.layers = append(n.layers, *layer.Dense(outunit, input_dim))
 }
 
-func sigmoid(x  int) float64 {
-	return 1/(1+math.Exp(-1*float64(x)))
-}
-
-func (n *neuron) Run() {
-	for _, layer :=  range n.layers {
-		layer.
-	}
-}
+// func (n *neuron) Run() {
+// 	for _, layer :=  range n.layers {
+// 		layer.
+// 	}
+// }

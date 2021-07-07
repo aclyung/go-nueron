@@ -9,13 +9,17 @@ import (
 
 // model structure
 type model struct {
-	layers []layer.Layer
+	layers        []layer.Layer
+	learning_rate float64
 }
 
-// Initialize model and Input node
-func Init(outunit int, input int) *model {
+// Initialize model, Input node and learning rate
+func Init(outunit int, input int, lr float64) *model {
 	m := &model{}
-	m.layers = append(m.layers, *layer.Dense(input, outunit))
+	m.learning_rate = lr
+	l := *layer.Dense(input, outunit)
+	l.Weights = matrix.Matrix_fill(l.Weights, 1.0)
+	m.layers = append(m.layers, l)
 	return m
 }
 
@@ -29,24 +33,48 @@ func (m *model) Add(outunit int) {
 func (n *model) Run(input_Mat []matrix.Matrix, target_values []matrix.Matrix) {
 	for a, i := range input_Mat {
 		//fmt.Println(i)
-		var res matrix.Matrix
-		in := matrix.Transpose(i)
-		t := matrix.Transpose(target_values[a])
+		var res []matrix.Matrix
+		input := matrix.Transpose(i)
+		target := matrix.Transpose(target_values[a])
 		for b, v := range n.layers {
 			fmt.Printf("[%d][%d]:", a, b)
-			fmt.Print(in, ":", len(in), "/")
-			out := v.Run(in)
-			in = out
-			fmt.Println(in, len(in))
-			res = out
+			fmt.Print(input, ":", len(input), "/")
+			out := v.Run(input)
+			input = out
+			fmt.Println(input, len(input))
+			res = append(res, out)
 		}
-		err := matrix.Diff(t, res)
-		for b, _ := range n.layers {
-			l := &n.layers[len(n.layers)-b-1]
-			er, _ := matrix.Multiply(l.Weights, err)
-			l.Weights = matrix.Sum(&l.Weights, matrix.Multiply_elem())
 
+		var next_layer_error matrix.Matrix
+		var next_layer_output matrix.Matrix
+		for b := range n.layers {
+			if b == 0 {
+				next_layer_error, _ = matrix.Diff(target, res[len(res)-1])
+				next_layer_output = res[len(res)-1-b]
+				continue
+			}
+			cur_layer_output := res[len(res)-b-1]
+			l := &n.layers[len(n.layers)-b]
+			err, _ := matrix.Multiply(matrix.Transpose(l.Weights), next_layer_error)
+			l.UpdateWeight(n.learning_rate, cur_layer_output, next_layer_output, next_layer_error)
+			next_layer_output = cur_layer_output
+			next_layer_error = err
+			if b == len(n.layers) {
+				break
+			}
+
+			// if b == 0 {
+			// 	err, _ = matrix.Diff(target, res[len(res)-b-1])
+			// 	next_layer_error = err
+			// 	continue
+			// } else {
+			// 	err, _ = matrix.Multiply(matrix.Transpose(l.Weights), next_layer_error)
+			// }
+			// l.UpdateWeight(n.learning_rate, cur_layer_output, next_layer_output, err)
+
+			// er, _ := matrix.Multiply(l.Weights, errVal)
+			// l.Weights,_ = matrix.Sum(&l.Weights, matrix.Dot())
+			// _ = er
 		}
-		fmt.Println(res, "error:", err)
 	}
 }
