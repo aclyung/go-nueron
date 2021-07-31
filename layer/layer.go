@@ -7,6 +7,8 @@ import (
 // Layer structure
 type Layer struct {
 	Weights matrix.Matrix
+	Activation func()
+	
 	Output  int
 }
 

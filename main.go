@@ -30,7 +30,7 @@ func main() {
 	// fmt.Println(c)
 	// fmt.Println(s)
 	// fmt.Println(r)
-	mod := model.Init(3, 3, 0.4)
+	mod := model.Init(3, 3, 0.1)
 	mod.Add(3)
 	mod.Add(3)
 	mod.Add(1)

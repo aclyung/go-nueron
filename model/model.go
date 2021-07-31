@@ -62,19 +62,6 @@ func (n *model) Run(input_Mat []matrix.Matrix, target_values []matrix.Matrix) {
 			if b == len(n.layers) {
 				break
 			}
-
-			// if b == 0 {
-			// 	err, _ = matrix.Diff(target, res[len(res)-b-1])
-			// 	next_layer_error = err
-			// 	continue
-			// } else {
-			// 	err, _ = matrix.Multiply(matrix.Transpose(l.Weights), next_layer_error)
-			// }
-			// l.UpdateWeight(n.learning_rate, cur_layer_output, next_layer_output, err)
-
-			// er, _ := matrix.Multiply(l.Weights, errVal)
-			// l.Weights,_ = matrix.Sum(&l.Weights, matrix.Dot())
-			// _ = er
 		}
 	}
 }

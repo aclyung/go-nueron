@@ -28,7 +28,7 @@ func Matrix2D(colums [][]float64) (Matrix, error) {
 }
 
 func precision2(f float64) float64 {
-	return float64(int(f*100)) / 100
+	return float64(int(f*100000)) / 100000
 }
 
 // Create 2d element by shape
@@ -131,6 +131,25 @@ func Sigmoid_Matrix(m Matrix) Matrix {
 	for i := range m {
 		for j := range m[i] {
 			m[i][j] = precision2(sigmoid(m[i][j]))
+		}
+	}
+	return m
+}
+
+func Sigmoid_Backward()
+
+func ReLU(x float64) float64 {
+	r := 0.0
+	if x > 0 {
+		r = x
+	}
+	return precision2(r)
+}
+
+func ReLU_Matrix(m Matrix) Matrix {
+	for i := range m {
+		for j := range m[i] {
+			m[i][j] = precision2(ReLU(m[i][j]))
 		}
 	}
 	return m
