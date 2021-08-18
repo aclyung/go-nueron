@@ -136,7 +136,7 @@ func Sigmoid_Matrix(m Matrix) Matrix {
 	return m
 }
 
-func Sigmoid_Backward()
+func Sigmoid_Backward() {}
 
 func ReLU(x float64) float64 {
 	r := 0.0
@@ -164,6 +164,7 @@ func Matrix_real_mul(m Matrix, r float64) Matrix {
 	return m
 }
 
+// Sum Returns Sum of two Matrixs
 func Sum(m1 Matrix, m2 Matrix) (Matrix, error) {
 	if SizeCheck(m1, m2) != nil {
 		return nil, ErrMatrixSizeNotMatch
@@ -176,6 +177,7 @@ func Sum(m1 Matrix, m2 Matrix) (Matrix, error) {
 	return m1, nil
 }
 
+// Diffs the value of Matrix by real number and return
 func RealDiff(r float64, m Matrix) Matrix {
 	mat := Matrix_shape(len(m), len(m[0]))
 	mat = Matrix_fill(mat, r)
