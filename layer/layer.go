@@ -6,10 +6,10 @@ import (
 
 // Layer structure
 type Layer struct {
-	Weights matrix.Matrix
+	Weights    matrix.Matrix
 	Activation func()
-	
-	Output  int
+
+	Output int
 }
 
 // Create Dense Layer
