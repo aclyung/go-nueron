@@ -11,6 +11,12 @@ import (
 // Matrix type
 type Matrix [][]float64
 
+var SIGMOID func(Matrix) Matrix = func(m Matrix) Matrix {
+	return Sigmoid_Matrix(m)
+}
+var RELU func(Matrix) Matrix = func(m Matrix) Matrix {
+	return ReLU_Matrix(m)
+}
 var ErrMultiplyIndexNotMatch = errors.New("row of first matrix and colum of second matrix do not match")
 var ErrMatrixSizeNotMatch = errors.New("both matrices must be the same size")
 
@@ -73,7 +79,7 @@ func Sum_row_vector(m Matrix) float64 {
 	return r
 }
 
-func Transpose(m Matrix) Matrix {
+func (m Matrix) Transpose() Matrix {
 	tmat := Matrix_shape(len(m[0]), len(m))
 	for i := range tmat {
 		for j := range tmat[0] {

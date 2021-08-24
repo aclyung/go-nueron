@@ -34,8 +34,8 @@ func (n *model) Run(input_Mat []matrix.Matrix, target_values []matrix.Matrix) {
 	for a, i := range input_Mat {
 		//fmt.Println(i)
 		var res []matrix.Matrix
-		input := matrix.Transpose(i)
-		target := matrix.Transpose(target_values[a])
+		input := i.Transpose()
+		target := target_values[a].Transpose()
 		for b, v := range n.layers {
 			fmt.Printf("[%d][%d]:", a, b)
 			fmt.Print(input, ":", len(input), "/")
@@ -55,7 +55,7 @@ func (n *model) Run(input_Mat []matrix.Matrix, target_values []matrix.Matrix) {
 			}
 			cur_layer_output := res[len(res)-b-1]
 			l := &n.layers[len(n.layers)-b]
-			err, _ := matrix.Multiply(matrix.Transpose(l.Weights), next_layer_error)
+			err, _ := matrix.Multiply(l.Weights.Transpose(), next_layer_error)
 			l.UpdateWeight(n.learning_rate, cur_layer_output, next_layer_output, next_layer_error)
 			next_layer_output = cur_layer_output
 			next_layer_error = err

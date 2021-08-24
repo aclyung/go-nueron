@@ -27,7 +27,7 @@ func (l *Layer) UpdateWeight(lr float64, cur_layer_output matrix.Matrix, next_la
 	v1, _ := matrix.Multiply_elem(err, next_layer_output)
 	v2 := matrix.RealDiff(1.0, next_layer_output)
 	v3, _ := matrix.Multiply_elem(v1, v2)
-	v4, _ := matrix.Multiply(v3, matrix.Transpose(cur_layer_output))
+	v4, _ := matrix.Multiply(v3, cur_layer_output.Transpose())
 	updateWeightval := matrix.Matrix_real_mul(v4, lr)
 	l.Weights, _ = matrix.Sum(l.Weights, updateWeightval)
 
