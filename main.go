@@ -1,11 +1,15 @@
 package main
 
 import (
+	"fmt"
+	"time"
+
 	"almeng.com/neuron/matrix"
 	"almeng.com/neuron/model"
 )
 
 func main() {
+	start := time.Now()
 	mod := model.Init(3, 3, 1.4)
 	mod.Add(3)
 	mod.Add(3)
@@ -19,4 +23,5 @@ func main() {
 		mat[i] = mt
 	}
 	mod.Run(m, mat)
+	fmt.Println(time.Since(start))
 }
