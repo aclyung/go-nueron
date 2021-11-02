@@ -1,8 +1,8 @@
 {
   "name": "ggc",
   "version": "0.0.1",
-  "description": "glang compiler",
-  "repository": "https://github.com/aclyung/ggc",
+  "description": "Golang ML Library Demo",
+  "repository": "https://github.com/aclyung/go-neuron",
   "author": "almeng <aclyung1234556@gmail.com>",
   "license": "GPL-3.0",
   "private": false,
